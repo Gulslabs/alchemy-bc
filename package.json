@@ -1,0 +1,17 @@
+{
+  "name": "alchemy-bc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "chai": "^5.1.0",
+    "mocha": "^10.3.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "ethereum-cryptography": "^2.1.3"
+  }
+}
