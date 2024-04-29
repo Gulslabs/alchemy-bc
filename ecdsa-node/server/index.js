@@ -28,37 +28,13 @@ app.post("/send", (req, res) => {
   // sender should not be passed as input.
   const { signature, recipient, amount } = req.body;
   const { r, s, recovery } = signature;
-  console.log(`Signature: ${signature}`);
-  console.log(`r: ${signature.r}`);
-   const dummy1 = JSONbig.stringify(signature);
-  // console.log(`jsonbig.stringify(signature): ${dummy1}`);
-  // console.log(`r1: ${dummy1.recover}`);
-  const dummy2 = JSONbig.parse(dummy1);
-  console.log(`jsonbig.parse(JSONbig.stringify(signature)): ${dummy2}`);
-  const mySign = { r: dummy2.r, s: dummy2.s, recover:  dummy2.recover};
-  console.log(`My Sign:  ${JSONbig.parse(mySign)}`); 
-  const publicKey = mySign.recoverPublicKey(keccak.keccak256(utils.utf8ToBytes(amount.toString()))).toHex();
+  console.log(`Signature: ${signature}`);     
+  const parsedSignature = JSONbig.parse(signature); 
+  const recreateSig = {r: parsedSignature.r, s: parsedSignature.s}
+  console.log(`My Sign: ${parsedSignature.recovery}`);
+   
+  const publicKey = recreateSig.recoverPublicKey(keccak.keccak256(utils.utf8ToBytes(amount.toString()))).toHex();
   console.log(`Public Key: ${publicKey}`);
-  // console.log(`r2: ${dummy2.recover}`);
-  // const dummy3 = JSON.stringify(signature); 
-  // console.log(`JSON.stringify(signature): ${dummy3}`);
-  // console.log(`r3: ${dummy3.recover}`);
-  // const dummy4 = JSONbig.parse(signature); 
-//  console.log(`jsonbig.parse(signature): ${dummy4}`);
-  //  const signatureObj = JSONbig.parse(signature);
-  //  console.log(`Signature: ${signatureObj}`);
-  //  const sig = new secp256.Signature(BigInt(signature.r), BigInt(signature.s), signature.recovery);
-  //  const publicKey = sig.recoverPublicKey(keccak.keccak256(utils.utf8ToBytes(amount.toString()))).toHex();
-  //  const sender = keccak(publicKey.slice(1)).slice(-20);
-  //  setInitialBalance(sender);
-  //  setInitialBalance(recipient);
-  // if (balances[sender] < amount) {
-  //   res.status(400).send({ message: "Not enough funds!" });
-  // } else {
-  //   balances[sender] -= amount;
-  //   balances[recipient] += amount;
-  //   res.send({ balance: balances[sender] });
-  //}
 });
 
 app.listen(port, () => {

@@ -14,25 +14,18 @@ function Transfer({ address, setBalance, privateKey }) {
     evt.preventDefault();
     //setSignature(await secp256k1.sign(sendAmount, privateKey));
     console.log(`Private key: ${privateKey}. SendAmount: ${sendAmount}`);
-    const signature = secp256k1.sign(keccak256(utf8ToBytes(sendAmount)), privateKey)
-    //console.log(`Public Key: ${signature.recoverPublicKey(keccak256(utf8ToBytes(sendAmount))).toHex()}`)
-    //console.log(`Signature: ${signature.r}, ${signature.s}, ${signature.recovery} `);
+    const signature = secp256k1.sign(keccak256(utf8ToBytes(sendAmount)), privateKey)    
     const mySig = {
       r: signature.r, 
       s: signature.s, 
       recover: signature.recovery
-    }; 
-    // console.log(`My Sign 1: ${JSON.stringify(mySig)}`)
-    // console.log(`My Sign 2: ${jsonBig.parse(mySig)}`);
-    console.log(`My Sign : ${jsonBig.stringify(mySig)}`);
-    //console.log(`Signature:  ${signature.toString('hex')}`); 
-    //const signature1 = Buffer.from(signature, 'hex'); 
-    //console.log(`Signature:  ${signature1}`); 
+    };     
+    console.log(`My Sign : ${jsonBig.stringify(signature)}`);    
     try {
       const {
         data: { balance },
       } = await server.post(`send`, {
-        signature: jsonBig.stringify(mySig),
+        signature: jsonBig.stringify(signature),
         amount: parseInt(sendAmount),
         recipient
       });
