@@ -4,6 +4,11 @@ This project is an example of using a client and server to facilitate transfers 
 
 However, something that we would like to incoporate is Public Key Cryptography. By using Elliptic Curve Digital Signatures we can make it so the server only allows transfers that have been signed for by the person who owns the associated address.
 
+### Issue: 
+- I am unable to send `signature` created at client to the server; even if I succeed to pass i am unable to regenerate the `signature` at server-end.
+  - Client - `Transfer.jsx`
+  - Server - `index.js`
+
 ### Client
 
 The client folder contains a [react app](https://reactjs.org/) using [vite](https://vitejs.dev/). To get started, follow these steps:
